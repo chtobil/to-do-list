@@ -1,0 +1,72 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def add_task(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def delete_task(self, index):
+        if index == 0:
+            self.head = self.head.next
+        else:
+            current = self.head
+            for _ in range(index-1):
+                if current.next is None:
+                    return
+                current = current.next
+            if current.next is None:
+                return
+            current.next = current.next.next
+
+    def display_tasks(self):
+        current = self.head
+        index = 0
+        while current:
+            print(f"{index}: {current.data}")
+            current = current.next
+            index += 1
+
+    def clear_tasks(self):
+        self.head = None
+
+# Main program
+task_list = LinkedList()
+
+while True:
+    print("\nTo-Do List Menu:")
+    print("1. Add Task")
+    print("2. Delete Task")
+    print("3. Display All Tasks")
+    print("4. Clear All Tasks")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        task = input("Enter the task: ")
+        task_list.add_task(task)
+    elif choice == "2":
+        index = int(input("Enter the index of the task to delete: "))
+        task_list.delete_task(index)
+    elif choice == "3":
+        task_list.display_tasks()
+    elif choice == "4":
+        task_list.clear_tasks()
+    elif choice == "5":
+        break
+    else:
+        print("Invalid choice. Please choose again.")
+
+print("Program exited.")
